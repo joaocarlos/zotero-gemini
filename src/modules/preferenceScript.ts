@@ -1,5 +1,6 @@
 import { config } from "../../package.json";
 import { getString } from "../utils/locale";
+import { populateModelSelect, getAvailableModels } from "../utils/models";
 
 export async function registerPrefsScripts(_window: Window) {
   // This function is called when the prefs window is opened
@@ -107,7 +108,37 @@ async function updatePrefsUI() {
 }
 
 function bindPrefEvents() {
+  // Add click handler for fetch models button
+  addon.data
+    .prefs!.window.document.querySelector(`#${config.addonRef}-fetch-models`)
+    ?.addEventListener("click", async () => {
+      const select = addon.data.prefs!.window.document.getElementById(
+        `${config.addonRef}-model`,
+      ) as HTMLSelectElement;
+      if (select) {
+        try {
+          await populateModelSelect(select);
+        } catch (error) {
+          addon.data.prefs!.window.alert(`Failed to fetch models: ${error}`);
+        }
+      }
+    });
 
+  // Populate initial model list on load
+  const select = addon.data.prefs!.window.document.getElementById(
+    `${config.addonRef}-model`,
+  ) as HTMLSelectElement;
+  if (select) {
+    // Use cached or default models
+    const models = getAvailableModels();
+    models.forEach((model) => {
+      const option = addon.data.prefs!.window.document.createElement("option");
+      const modelName = model.name.replace("models/", "");
+      option.value = modelName;
+      option.textContent = model.displayName || modelName;
+      select.appendChild(option);
+    });
+  }
 
   addon.data
     .prefs!.window.document.querySelector(
@@ -115,19 +146,5 @@ function bindPrefEvents() {
     )
     ?.addEventListener("change", (e) => {
       ztoolkit.log(e);
-      addon.data.prefs!.window.alert(
-        `Successfully changed to ${(e.target as HTMLInputElement).value}!`,
-      );
-    });
-
-    addon.data
-    .prefs!.window.document.querySelector(
-      `#zotero-prefpane-${config.addonRef}-base`,
-    )
-    ?.addEventListener("change", (e) => {
-      ztoolkit.log(e);
-      addon.data.prefs!.window.alert(
-        `Successfully changed to ${(e.target as HTMLInputElement).value}!`,
-      );
     });
 }

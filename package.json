@@ -1,26 +1,37 @@
 {
-  "name": "zotero-chatgpt",
-  "version": "1.5",
-  "description": "ChatGPT in Zotero",
+  "name": "zotero-gemini",
+  "version": "1.0.0",
+  "description": "Gemini-powered research assistant for Zotero",
   "config": {
-    "addonName": "Zotero ChatGPT",
-    "addonID": "zoterochatbot@foxmail.com",
-    "addonRef": "zoterochatbot",
-    "addonInstance": "AddonTemplate",
-    "prefsPrefix": "extensions.zotero.addontemplate"
+    "addonName": "Gemini for Zotero",
+    "addonID": "zoterogemini@joaocarlos",
+    "addonRef": "zoterogemini",
+    "addonInstance": "ZoteroGemini",
+    "prefsPrefix": "extensions.zotero.zoterogemini"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kazgu/zotero-chatgpt.git"
+    "url": "git+https://github.com/joaocarlos/zotero-gemini.git"
   },
-  "author": "kazgu",
+  "author": "joaocarlos",
   "bugs": {
-    "url": "https://github.com/kazgu/zotero-chatgpt/issues"
+    "url": "https://github.com/joaocarlos/zotero-gemini/issues"
   },
-  "homepage": "https://github.com/kazgu/zotero-chatgpt#readme",
+  "homepage": "https://github.com/joaocarlos/zotero-gemini#readme",
+  "keywords": [
+    "zotero",
+    "plugin",
+    "gemini",
+    "ai",
+    "research",
+    "pdf",
+    "chat",
+    "reference-manager"
+  ],
   "license": "AGPL-3.0-or-later",
   "scripts": {
     "start": "zotero-plugin serve",
+    "dev": "NODE_ENV=development zotero-plugin serve",
     "build": "tsc --noEmit && zotero-plugin build",
     "lint": "prettier --write . && eslint . --fix",
     "release": "zotero-plugin release",
@@ -28,6 +39,13 @@
     "update-deps": "npm update --save"
   },
   "dependencies": {
+    "markdown-it": "^14.1.0",
+    "markdown-it-sup": "^2.0.0",
+    "markdown-it-task-lists": "^2.1.1",
+    "zotero-plugin-toolkit": "^4.0.9"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.14.0",
     "@types/aws-lambda": "^8.10.145",
     "@types/bluebird": "^3.5.42",
     "@types/estree": "^1.0.6",
@@ -41,19 +59,14 @@
     "@types/semver": "^7.5.8",
     "@types/wrap-ansi": "^8.1.0",
     "@types/yauzl": "^2.10.3",
-    "aws-lambda": "^1.0.7",
-    "wrap-ansi": "^9.0.0",
-    "zotero-plugin-toolkit": "^4.0.9"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.14.0",
+    "@types/markdown-it": "^14.1.2",
     "@types/node": "^22.9.0",
     "eslint": "^9.12.0",
     "prettier": "^3.3.3",
     "typescript": "^5.6.3",
     "typescript-eslint": "^8.14.0",
     "zotero-plugin-scaffold": "^0.1.6",
-    "zotero-types": "^2.2.0"
+    "zotero-types": "^3.1.0"
   },
   "prettier": {
     "printWidth": 80,

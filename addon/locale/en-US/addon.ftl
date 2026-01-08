@@ -1,10 +1,10 @@
-startup-begin = Addon is loading
-startup-finish = Addon is ready
+startup-begin = Gemini addon is loading
+startup-finish = Gemini addon is ready
 menuitem-label = Papers
-menupopup-label = Addon Template: Menupopup
-menuitem-submenulabel = Addon Template
-menuitem-filemenulabel = Addon Template: File Menuitem
-prefs-title = ChatGPT
+menupopup-label = Zotero Gemini: Menu
+menuitem-submenulabel = Zotero Gemini
+menuitem-filemenulabel = Zotero Gemini: File Menu
+prefs-title = Gemini AI
 prefs-table-title = Title
 prefs-table-detail = Detail
 tabpanel-lib-tab-label = Lib Tab

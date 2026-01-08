@@ -8,6 +8,8 @@ import { config } from "../package.json";
 import { getString, initLocale } from "./utils/locale";
 import { registerPrefsScripts } from "./modules/preferenceScript";
 import { createZToolkit } from "./utils/ztoolkit";
+import { getPref } from "./utils/prefs";
+import { populateModelSelect, fetchModelsOnStartup } from "./utils/models";
 
 async function onStartup() {
   await Promise.all([
@@ -20,6 +22,11 @@ async function onStartup() {
 
   BasicExampleFactory.registerPrefs();
 
+  // Fetch models on startup (silent, non-blocking)
+  fetchModelsOnStartup().catch((error) => {
+    ztoolkit.log("Model fetch on startup failed:", error);
+  });
+
   // BasicExampleFactory.registerNotifier();
 
   // KeyExampleFactory.registerShortcuts();
@@ -29,8 +36,6 @@ async function onStartup() {
   // await UIExampleFactory.registerExtraColumnWithCustomCell();
 
   // UIExampleFactory.registerItemPaneSection();
-
-
 
   await Promise.all(
     Zotero.getMainWindows().map((win) => onMainWindowLoad(win)),
@@ -64,8 +69,6 @@ async function onMainWindowLoad(win: Window): Promise<void> {
   UIExampleFactory.registerReaderItemPaneSection(win);
   UIExampleFactory.registerStyleSheet(win);
 
-  UIExampleFactory.registerRightClickMenuItem();
-
   // UIExampleFactory.registerRightClickMenuPopup(win);
 
   UIExampleFactory.registerWindowMenuWithSeparator();
@@ -97,7 +100,7 @@ function onShutdown(): void {
   addon.data.dialog?.window?.close();
   // Remove addon object
   addon.data.alive = false;
-  delete Zotero[config.addonInstance];
+  delete (Zotero as any)[config.addonInstance];
 }
 
 /**
@@ -134,8 +137,31 @@ async function onPrefsEvent(type: string, data: { [key: string]: any }) {
     case "load":
       registerPrefsScripts(data.window);
       break;
+    case "fetch-models":
+      await fetchAvailableModels(data.window);
+      break;
     default:
       return;
+  }
+}
+
+async function fetchAvailableModels(window: Window) {
+  const apiKey = getPref("input") as string;
+
+  if (!apiKey) {
+    window.alert("Please enter your API key first");
+    return;
+  }
+
+  const select = window.document.getElementById(
+    `${config.addonRef}-model`,
+  ) as HTMLSelectElement;
+  if (!select) return;
+
+  try {
+    await populateModelSelect(select);
+  } catch (error) {
+    window.alert(`Failed to fetch models: ${error}`);
   }
 }
 

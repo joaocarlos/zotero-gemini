@@ -1,3 +1,2 @@
 /* eslint-disable no-undef */
-// pref("__prefsPrefix__.enable", true);
-pref("__prefsPrefix__.base", "https://api.openai.com/v1");
+// Gemini API key is stored in preferences, no base URL needed
