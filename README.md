@@ -1,9 +1,9 @@
 # Gemini for Zotero Plugin
 
-[![Zotero 7](https://img.shields.io/badge/Zotero-7-cc2936?style=for-the-badge&logo=zotero&logoColor=white)](https://www.zotero.org)
+[![Zotero](https://img.shields.io/badge/Zotero-7--9-cc2936?style=for-the-badge&logo=zotero&logoColor=white)](https://www.zotero.org)
 [![License: AGPL-3.0-or-later](https://img.shields.io/badge/License-AGPL--3.0--or--later-2d8f5a?style=for-the-badge&logo=gnu&logoColor=white)](https://www.gnu.org/licenses/agpl-3.0)
 
-A Zotero 7 plugin that brings Google Gemini chat into your reading workflow with PDF context and model selection.
+A Zotero plugin that brings Google Gemini chat into your reading workflow with PDF context and model selection.
 
 ![show](default.png "show")
 
@@ -56,7 +56,7 @@ Google applies rate limits per model and per account. If you hit limits, try swi
 
 ### Prerequisites
 
-- [Zotero 7](https://www.zotero.org/support/beta_builds)
+- [Zotero](https://www.zotero.org/download/)
 - [Node.js](https://nodejs.org/en/)
 - [Git](https://git-scm.com/)
 
